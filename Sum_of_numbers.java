@@ -5,6 +5,6 @@ public class Sum_of_numbers {
     int b=20;
     int c=30;
     int sum=a+b+c;
-    System.out.println("Sum is :"+sum)
+    System.out.println("Sum is :"+sum);
   }
 }
