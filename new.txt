@@ -1,0 +1,431 @@
+Exp11
+1️⃣ Basic Calculator
+Calculator.java
+package lab;
+
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+}
+CalculatorTest.java
+package lab;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class CalculatorTest {
+
+    Calculator c = new Calculator();
+
+    @Test
+    public void testAdd() {
+        assertEquals(5, c.add(2, 3));
+    }
+
+    @Test
+    public void testSubtract() {
+        assertEquals(1, c.subtract(3, 2));
+    }
+}
+________________________________________
+2️⃣ Greeting Message (API = just method here, nothing fancy)
+Greeting.java
+package lab;
+
+public class Greeting {
+    public String getMessage(String name) {
+        return "Hello " + name;
+    }
+}
+GreetingTest.java
+package lab;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class GreetingTest {
+
+    Greeting g = new Greeting();
+
+    @Test
+    public void testMessage() {
+        assertEquals("Hello Megha", g.getMessage("Megha"));
+    }
+}
+________________________________________
+3️⃣ Linear Search
+LinearSearch.java
+package lab;
+
+public class LinearSearch {
+    public int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key)
+                return i;
+        }
+        return -1;
+    }
+}
+LinearSearchTest.java
+package lab;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class LinearSearchTest {
+
+    LinearSearch ls = new LinearSearch();
+
+    @Test
+    public void testSearch() {
+        int[] arr = {1, 2, 3, 4};
+        assertEquals(2, ls.search(arr, 3));
+    }
+}
+________________________________________
+4️⃣ Find Maximum of 3 Numbers
+MaxFinder.java
+package lab;
+
+public class MaxFinder {
+    public int findMax(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
+}
+MaxFinderTest.java
+package lab;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class MaxFinderTest {
+
+    MaxFinder mf = new MaxFinder();
+
+    @Test
+    public void testMax() {
+        assertEquals(9, mf.findMax(3, 9, 5));
+    }
+}
+________________________________________
+5️⃣ Bank Account
+BankAccount.java
+package lab;
+
+public class BankAccount {
+    double balance = 0;
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+BankAccountTest.java
+package lab;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class BankAccountTest {
+
+    @Test
+    public void testDeposit() {
+        BankAccount acc = new BankAccount();
+        acc.deposit(100);
+        assertEquals(100, acc.getBalance(), 0);
+    }
+
+    @Test
+    public void testWithdraw() {
+        BankAccount acc = new BankAccount();
+        acc.deposit(100);
+        acc.withdraw(40);
+        assertEquals(60, acc.getBalance(), 0);
+    }
+}
+Exp 12
+mvn archetype:generate
+Same code for java and test change the pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- Your project info -->
+    <groupId>com.lab</groupId>
+    <artifactId>sample-app</artifactId>
+    <version>1.0</version>
+    <!-- JUnit 4 dependency -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+Create a folder called lib and download this https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
+mvn test
+exp 14
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.10</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+    </build>
+Exp 15
+# Check Docker installation
+docker --version
+docker ps
+docker ps -a
+docker images
+docker run hello-world
+docker pull nginx
+docker run -d -p 8080:80 nginx
+docker ps
+docker stop <container_id>
+docker rm <container_id>
+docker rmi nginx
+exp 16
+Sample.java
+public class Sample {
+    public static void main(String[] args) {
+        System.out.println("Hello from Docker!");
+    }
+}
+Dockerfile
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . .
+RUN javac Sample.java
+CMD ["java", "Sample"]
+commands
+docker build -t myfirstapp .
+docker run myfirstapp
+exp 17
+docker --version
+docker ps
+docker run -d -p 8082:80 nginx
+docker ps
+docker volume create myvolume
+docker volume ls
+docker run -d -p 8083:80 -v myvolume:/usr/share/nginx/html nginx
+docker ps
+docker stop <container_id>
+docker rm <container_id>
+docker run -d -p 8083:80 -v myvolume:/usr/share/nginx/html nginx
+docker ps
+exp18
+Grade.java
+class Grade {
+    public static void main(String[] args) {
+        int avg = 85;
+
+        if (avg >= 90) System.out.println("Grade A");
+        else if (avg >= 80) System.out.println("Grade B");
+        else System.out.println("Grade C");
+    }
+}
+Dockerfile
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . /app
+RUN javac Grade.java
+CMD ["java", "Grade"]
+Commands
+docker build -t java-app .
+docker tag java-app yourusername/java-app:v1
+docker push yourusername/java-app:v1
+exp19
+🎯 Objective
+To build Docker image using Jenkins.
+________________________________________
+📁 Step 1: Prepare GitHub Repo
+Upload these files:
+🔹 Grade.java
+class Grade {
+    public static void main(String[] args) {
+        System.out.println("Docker + Jenkins Working");
+    }
+}
+________________________________________
+🔹 Dockerfile
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . .
+RUN javac Grade.java
+CMD ["java", "Grade"]
+________________________________________
+⚙️ Step 2: Create Jenkins Job
+•	Open Jenkins → http://localhost:8080 
+•	Click New Item 
+•	Enter name: Docker-Jenkins 
+•	Select Pipeline → OK 
+________________________________________
+📄 Step 3: Add Pipeline Script
+pipeline {
+    agent any
+    stages {
+        stage('Clone Code') {
+            steps {
+                git 'https://github.com/your-username/your-repo.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t my-app .'
+            }
+        }
+        stage('Run Container') {
+            steps {
+                bat 'docker run -d my-app'
+            }
+        }
+    }
+}
+
+docker images
+docker ps
+(OR)
+
+1. Create the job in jenkins by the name Docker Integration with jenkins
+
+2. Configure the settings like the other jenkins programs
+
+3. Create Repository in github and place the Dockerfile and Java File
+
+4. Write the following Commands in Execute Windows batch command Option in jenkins
+
+docker build -t java-app .
+docker run -d -t java-app
+
+5. Save and apply 
+
+6. Once build is success check the image created in docker desktop
+Exp20
+📁 STEP 1: Folder Structure (same, don’t change)
+sample-webapp/
+ ├── src/main/java/com/example/HelloServlet.java
+ ├── src/main/webapp/index.jsp
+ ├── src/main/webapp/WEB-INF/web.xml
+ ├── pom.xml
+ ├── Dockerfile
+ └── Jenkinsfile
+________________________________________
+📄 STEP 2: SIMPLE CODE
+________________________________________
+🔹 HelloServlet.java (shortest possible)
+package com.example;
+
+import java.io.*;
+import javax.servlet.http.*;
+
+public class HelloServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        res.getWriter().println("Deployment Successful!<br>GitHub → Jenkins → Docker → Tomcat");
+    }
+}
+________________________________________
+🔹 web.xml (minimal)
+<web-app>
+<servlet>
+<servlet-name>s</servlet-name>
+<servlet-class>com.example.HelloServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>s</servlet-name>
+<url-pattern>/hello</url-pattern>
+</servlet-mapping>
+</web-app>
+________________________________________
+🔹 index.jsp (simple)
+<h2>CI/CD Demo</h2>
+<a href="hello">Click</a>
+________________________________________
+🔹 pom.xml (minimum required)
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+<modelVersion>4.0.0</modelVersion>
+<groupId>a</groupId>
+<artifactId>webapp</artifactId>
+<version>1</version>
+<packaging>war</packaging>
+
+<dependencies>
+<dependency>
+<groupId>javax.servlet</groupId>
+<artifactId>javax.servlet-api</artifactId>
+<version>4.0.1</version>
+<scope>provided</scope>
+</dependency>
+</dependencies>
+</project>
+________________________________________
+🔹 Dockerfile (simple)
+FROM tomcat:9
+COPY target/webapp.war /usr/local/tomcat/webapps/
+________________________________________
+🔹 Jenkinsfile (short version)
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+        stage('Docker') {
+            steps {
+                bat 'docker build -t app .'
+                bat 'docker run -d -p 8087:8080 app'
+            }
+        }
+    }
+}
+________________________________________
+▶️ STEP 3: Commands (once)
+git init
+git add .
+git commit -m "cicd"
+git branch -M main
+git remote add origin https://github.com/your-username/repo.git
+git push -u origin main
+________________________________________
+▶️ STEP 4: Jenkins
+•	New Item → Pipeline 
+•	Paste repo 
+•	Build Now 
+________________________________________
+▶️ STEP 5: FINAL OUTPUT
+Open:
+http://localhost:8087/webapp/
+Click link → you get:
+Deployment Successful!
+GitHub → Jenkins → Docker → Tomcat
+
