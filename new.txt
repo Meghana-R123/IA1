@@ -421,6 +421,9 @@ ________________________________________
 •	New Item → Pipeline 
 •	Paste repo 
 •	Build Now 
+mvn clean package
+docker build -t sample-webapp .
+docker run -d -p 8087:8080 sample-webapp
 ________________________________________
 ▶️ STEP 5: FINAL OUTPUT
 Open:
